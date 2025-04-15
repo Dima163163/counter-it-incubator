@@ -1,0 +1,112 @@
+.app {
+    display: flex;
+    gap: 100px
+}
+
+.counter,
+.panelSettingsCounter{
+    border-radius: 10px;
+    padding: 10px;
+    border: 5px solid dodgerblue;
+    width: 400px;
+    min-height: min-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.counterDisplay,
+.panelSettingsDisplay {
+    font-size: 50px;
+    border: 5px solid dodgerblue;
+    padding: 20px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    min-height: 30%;
+}
+
+.counterNumber {
+    font-weight: 800;
+    color: dodgerblue;
+}
+
+.displayWarning {
+    font-size: 26px;
+    color: dodgerblue;
+}
+
+.displayError {
+    font-size: 24px;
+    color: red;
+    font-weight: 700;
+}
+
+.redColor {
+    color: red;
+    font-size: 70px;
+}
+
+
+.buttonBlock {
+    padding: 20px 30px;
+    display: flex;
+    border: 5px solid dodgerblue;
+    border-radius: 10px;
+}
+
+.between {
+    justify-content: space-between;
+}
+
+.center {
+    justify-content: center;
+}
+
+.button {
+    cursor: pointer;
+    padding: 5px 20px;
+    background: dodgerblue;
+    border: none;
+    border-radius: 10px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #32424a;
+}
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.itemText {
+    font-size: 20px;
+    font-weight: 700;
+    color: dodgerblue;
+}
+
+.itemLabel {
+    display: flex;
+    justify-content: space-between;
+}
+
+.itemLabel:not(:last-child) {
+    margin-bottom: 20px;
+}
+
+.itemInput {
+    border: 4px solid dodgerblue;
+    border-radius: 10px;
+    padding: 5px;
+    text-align: center;
+}
+
+.errorInput {
+    background: #e47777;
+    outline: red;
+    border: 4px solid red;
+}
