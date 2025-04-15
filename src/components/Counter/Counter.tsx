@@ -7,12 +7,13 @@ import {InputItem} from "../InputItem/InputItem.tsx";
 type Props = {
     maxValue: string
     startValue: string
-    error: string
-    editCounter: boolean
+    error: boolean
+    isEdit: boolean
     changeEditCounter: () => void
     changeMaxValue: (value: string) => void
     changeStartValue: (value: string) => void
     saveCountValues: () => void
+    oneCountWindow: boolean
 }
 
 export const Counter = (props: Props) => {
@@ -20,14 +21,14 @@ export const Counter = (props: Props) => {
         maxValue,
         startValue,
         error,
-        editCounter,
+        isEdit,
         changeEditCounter,
         changeMaxValue,
         changeStartValue,
         saveCountValues,
+        oneCountWindow
     } = props;
     const [count, setCount] = useState<string>('0');
-    console.log('error', error);
 
     useEffect(() => {
         setCount(startValue)
@@ -45,14 +46,15 @@ export const Counter = (props: Props) => {
     }
 
     const contentValue =() => {
-        if (error ==='readable') {
+        if (isEdit && !error) {
             return (
                 <p className={'displayWarning'}>
                     enter value and press 'set'
                 </p>
             )
         }
-        if (error === 'error') {
+
+        if (isEdit && error) {
             return (
                 <p className={'displayError'}>Incorrect value!</p>
             )
@@ -67,17 +69,16 @@ export const Counter = (props: Props) => {
     }
 
     const displayContent = contentValue()
-
     return (
         <div className={'counter'}>
             <CounterDisplay>
-                {editCounter ? (
+                {isEdit && oneCountWindow ? (
                     <>
                         <InputItem
                             text={'max value:'}
                             value={maxValue}
                             onChange={changeMaxValue}
-                            error={error === 'error'}
+                            error={error}
                             startValue={startValue}
 
                         />
@@ -85,22 +86,22 @@ export const Counter = (props: Props) => {
                             text={'start value:'}
                             value={startValue}
                             onChange={changeStartValue}
-                            error={error === 'error'}
+                            error={error}
                             startValue={startValue}
                         />
                     </>
-                ) : displayContent}
+                 ) : displayContent}
             </CounterDisplay>
-            <ButtonBlock justify={!editCounter ? 'between' : 'center'}>
-                { !editCounter ? (
-                        <>
-                            <Button text={'inc'} onClick={incrementCount} disabled={count === maxValue} />
-                            <Button text={'reset'} onClick={resetCount} />
-                            <Button text={'set'} onClick={changeEditCounter} />
-                        </>
-                    ) : (
-                        <Button text={'set'} onClick={saveCountValues} disabled={startValue >= maxValue || +startValue < 0 || error === 'error'}/>
-                    )
+            <ButtonBlock justify={isEdit && oneCountWindow ? 'center' : 'between'}>
+                { isEdit && oneCountWindow ? (
+                         <Button text={'set'} onClick={saveCountValues} disabled={startValue >= maxValue || +startValue < 0 || error}/>
+                     ) : (
+                    <>
+                        <Button text={'inc'} onClick={incrementCount} disabled={count === maxValue || error} />
+                        <Button text={'reset'} onClick={resetCount} disabled={error}/>
+                        <Button text={'set'} onClick={changeEditCounter} disabled={error}/>
+                    </>
+                )
                 }
             </ButtonBlock>
         </div>
