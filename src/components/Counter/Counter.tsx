@@ -9,7 +9,6 @@ type Props = {
     startValue: string
     error: boolean
     isEdit: boolean
-    changeEditCounter: () => void
     changeMaxValue: (value: string) => void
     changeStartValue: (value: string) => void
     saveCountValues: () => void
@@ -22,7 +21,6 @@ export const Counter = (props: Props) => {
         startValue,
         error,
         isEdit,
-        changeEditCounter,
         changeMaxValue,
         changeStartValue,
         saveCountValues,
@@ -92,17 +90,27 @@ export const Counter = (props: Props) => {
                     </>
                  ) : displayContent}
             </CounterDisplay>
-            <ButtonBlock justify={isEdit && oneCountWindow ? 'center' : 'between'}>
-                { isEdit && oneCountWindow ? (
-                         <Button text={'set'} onClick={saveCountValues} disabled={startValue >= maxValue || +startValue < 0 || error}/>
-                     ) : (
-                    <>
-                        <Button text={'inc'} onClick={incrementCount} disabled={count === maxValue || error} />
-                        <Button text={'reset'} onClick={resetCount} disabled={error}/>
-                        <Button text={'set'} onClick={changeEditCounter} disabled={error}/>
-                    </>
-                )
-                }
+            <ButtonBlock justify={oneCountWindow ? 'between' : ''}>
+                <>
+                    <Button
+                        text={'inc'}
+                        onClick={incrementCount}
+                        disabled={count === maxValue || error}
+                    />
+                    <Button
+                        text={'reset'}
+                        onClick={resetCount}
+                        disabled={error}
+                    />
+                    {oneCountWindow && (
+                            <Button
+                                text={'set'}
+                                onClick={saveCountValues}
+                                disabled={error}
+                            />
+                        )
+                    }
+                </>
             </ButtonBlock>
         </div>
     )

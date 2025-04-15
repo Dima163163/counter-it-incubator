@@ -51,10 +51,6 @@ function App() {
         setError(false);
     }
 
-    const changeEditCounter = () => {
-        setIsEdit(!isEdit);
-    }
-
 
   return (
     <div className={'app'}>
@@ -76,7 +72,6 @@ function App() {
                 startValue={startValue}
                 error={error}
                 isEdit={isEdit}
-                changeEditCounter={changeEditCounter}
                 changeMaxValue={changeMaxValue}
                 changeStartValue={changeStartValue}
                 saveCountValues={saveCountValues}
