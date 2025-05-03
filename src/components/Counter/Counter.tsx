@@ -90,24 +90,61 @@ export const Counter = (props: Props) => {
                     </>
                  ) : displayContent}
             </CounterDisplay>
-            <ButtonBlock justify={oneCountWindow ? 'between' : ''}>
+            <ButtonBlock justify={!isEdit && oneCountWindow ? 'between' : 'center'}>
                 <>
-                    <Button
-                        text={'inc'}
-                        onClick={incrementCount}
-                        disabled={count === maxValue || error}
-                    />
-                    <Button
-                        text={'reset'}
-                        onClick={resetCount}
-                        disabled={error}
-                    />
-                    {oneCountWindow && (
+                    {
+                        !oneCountWindow && !isEdit  && (
+                            <>
+                                <Button
+                                    text={'inc'}
+                                    onClick={incrementCount}
+                                    disabled={count === maxValue || error}
+                                />
+                                <Button
+                                    text={'reset'}
+                                    onClick={resetCount}
+                                    disabled={error}
+                                />
+                            </>
+                        )
+                    }
+                    {
+                        !oneCountWindow && isEdit && (
                             <Button
                                 text={'set'}
                                 onClick={saveCountValues}
                                 disabled={error}
                             />
+                        )
+                    }
+                    {
+                        oneCountWindow && isEdit && (
+                            <Button
+                                text={'set'}
+                                onClick={saveCountValues}
+                                disabled={error}
+                            />
+                        )
+                    }
+                    {
+                        oneCountWindow && !isEdit && (
+                            <>
+                                <Button
+                                    text={'inc'}
+                                    onClick={incrementCount}
+                                    disabled={count === maxValue || error}
+                                />
+                                <Button
+                                    text={'reset'}
+                                    onClick={resetCount}
+                                    disabled={error}
+                                />
+                                <Button
+                                    text={'set'}
+                                    onClick={saveCountValues}
+                                    disabled={error}
+                                />
+                            </>
                         )
                     }
                 </>

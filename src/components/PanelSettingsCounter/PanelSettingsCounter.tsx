@@ -11,6 +11,7 @@ type Props = {
     changeMaxValue: (value: string) => void
     saveCountValues: () => void
     error: boolean
+    isEdit: boolean
 }
 
 export const PanelSettingsCounter = (props: Props) => {
@@ -20,7 +21,8 @@ export const PanelSettingsCounter = (props: Props) => {
         changeStartValue,
         changeMaxValue,
         saveCountValues,
-        error
+        error,
+        isEdit
     } = props;
 
     return (
@@ -45,7 +47,7 @@ export const PanelSettingsCounter = (props: Props) => {
                 <Button
                     text={'set'}
                     onClick={saveCountValues}
-                    disabled={+startValue >= +maxValue || +maxValue < 0 || +startValue < 0 || error}
+                    disabled={!isEdit || +startValue >= +maxValue || +maxValue < 0 || +startValue < 0 || error}
                 />
             </ButtonBlock>
         </div>
