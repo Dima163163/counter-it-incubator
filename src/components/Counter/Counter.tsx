@@ -5,13 +5,15 @@ import {Button} from "../Button/Button.tsx";
 import {InputItem} from "../InputItem/InputItem.tsx";
 import {incrementValueCounterAC} from '../../model/counter-reducer.ts';
 import {useAppSelector} from '../../common/hooks/useAppSelector';
-import {selectCounter} from '../../model/counter-selectors';
+import {
+    selectCountCounter,
+    selectErrorCounter,
+    selectMaxValueCounter,
+    selectStartValueCounter
+} from '../../model/counter-selectors';
 import {useAppDispatch} from '../../common/hooks/useAppDispatch.ts';
 
 type Props = {
-    maxValue: string
-    startValue: string
-    error: boolean
     isEdit: boolean
     changeMaxValue: (value: string) => void
     changeStartValue: (value: string) => void
@@ -21,18 +23,17 @@ type Props = {
 
 export const Counter = (props: Props) => {
     const {
-        maxValue,
-        startValue,
-        error,
         isEdit,
         changeMaxValue,
         changeStartValue,
         saveCountValues,
         oneCountWindow
     } = props;
-    // const [count, setCount] = useState<string>('0');
-    // const [counter, dispatchToCounter] = useReducer(counterReducer, initialState);
-    const counter = useAppSelector(selectCounter)
+    const count = useAppSelector(selectCountCounter)
+    const maxValue = useAppSelector(selectMaxValueCounter)
+    const startValue = useAppSelector(selectStartValueCounter)
+    const error = useAppSelector(selectErrorCounter)
+
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -40,8 +41,8 @@ export const Counter = (props: Props) => {
     }, [startValue, dispatch])
 
     const incrementCount = () => {
-        if (+counter.count < +maxValue) {
-            const newCount = +counter.count + 1
+        if (+count < +maxValue) {
+            const newCount = +count + 1
             dispatch(incrementValueCounterAC({count: String(newCount)}))
         }
     }
@@ -68,8 +69,8 @@ export const Counter = (props: Props) => {
 
         return (
             <span
-                className={`counterNumber ${counter.count === maxValue ? 'redColor' : 'defaultColor'}`}>
-                {counter.count}
+                className={`counterNumber ${count === maxValue ? 'redColor' : 'defaultColor'}`}>
+                {count}
             </span>
         )
     }
@@ -106,7 +107,7 @@ export const Counter = (props: Props) => {
                                 <Button
                                     text={'inc'}
                                     onClick={incrementCount}
-                                    disabled={counter.count === maxValue || error}
+                                    disabled={count === maxValue || error}
                                 />
                                 <Button
                                     text={'reset'}
@@ -140,7 +141,7 @@ export const Counter = (props: Props) => {
                                 <Button
                                     text={'inc'}
                                     onClick={incrementCount}
-                                    disabled={counter.count === maxValue || error}
+                                    disabled={count === maxValue || error}
                                 />
                                 <Button
                                     text={'reset'}

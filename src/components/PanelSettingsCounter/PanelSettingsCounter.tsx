@@ -1,3 +1,5 @@
+import {useAppSelector} from '../../common/hooks/useAppSelector';
+import {selectErrorCounter, selectMaxValueCounter, selectStartValueCounter} from '../../model/counter-selectors';
 import {PanelSettingsDisplay} from "../PanelSettingsDisplay/PanelSettingsDisplay.tsx";
 import {ButtonBlock} from "../ButtonBlock/ButtonBlock.tsx";
 import {Button} from "../Button/Button.tsx";
@@ -5,25 +7,23 @@ import {InputItem} from "../InputItem/InputItem.tsx";
 
 
 type Props = {
-    maxValue: string
-    startValue: string
     changeStartValue: (value: string) => void
     changeMaxValue: (value: string) => void
     saveCountValues: () => void
-    error: boolean
     isEdit: boolean
 }
 
 export const PanelSettingsCounter = (props: Props) => {
     const {
-        maxValue,
-        startValue,
         changeStartValue,
         changeMaxValue,
         saveCountValues,
-        error,
         isEdit
     } = props;
+
+    const maxValue = useAppSelector(selectMaxValueCounter)
+    const startValue = useAppSelector(selectStartValueCounter)
+    const error = useAppSelector(selectErrorCounter)
 
     return (
         <div className={'panelSettingsCounter'}>
